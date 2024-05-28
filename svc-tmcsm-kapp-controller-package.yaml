@@ -1,0 +1,52 @@
+apiVersion: run.tanzu.vmware.com/v1alpha3
+kind: KappControllerConfig
+metadata:
+  name: svc-tmcsm-kapp-controller-package
+  namespace: tmc
+spec:
+  kappController:
+    config:
+      caCerts: |
+        -----BEGIN CERTIFICATE-----
+        MIIDsTCCApmgAwIBAgIUHSJbswh0vDbKanIIkUwJPvzqv2swDQYJKoZIhvcNAQEL
+        BQAwaDELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAk1OMRQwEgYDVQQHDAtNaW5uZWFw
+        b2xpczERMA8GA1UECgwIdmRvdWJsZWIxDDAKBgNVBAsMA2xhYjEVMBMGA1UEAwwM
+        dmRvdWJsZWIuY29tMB4XDTI0MDIwNTA0MDI0NVoXDTI5MDIwMzA0MDI0NVowaDEL
+        MAkGA1UEBhMCVVMxCzAJBgNVBAgMAk1OMRQwEgYDVQQHDAtNaW5uZWFwb2xpczER
+        MA8GA1UECgwIdmRvdWJsZWIxDDAKBgNVBAsMA2xhYjEVMBMGA1UEAwwMdmRvdWJs
+        ZWIuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0hMvbnnT77x8
+        Bs7mWkXmQE/LgXfUyOFm4cN50Nlg+XeFjKwZu0UzAB6ZOqcWUh1zh9i5IdNP6+ga
+        OkUlLastLQoLB7GGIrDMvHQ+Gam3CcmHGK4XKQdAclwduSdpdFj2glodPvZAH5ut
+        KUiMbj8jIj0l8FmfgUNKjj3auBCcC9vr8tnFOLCw31v2z1szanF2Ru9L5ol6HBaA
+        AUOiKEimZqq5gX8pjp7WoS05L3i84rDLQS1mcg9y2ftBo9Dhht9G7XMDMRSkz/Jh
+        nIhLajVNlBxh8bRjU3Lef0twAR6ZPkg+bxJvhBlyZu2nT614kGBkvrQR+DvdFACg
+        i+nu2ickCwIDAQABo1MwUTAdBgNVHQ4EFgQUY2++/AMqPqCBUDdyxkAOA/fmjIUw
+        HwYDVR0jBBgwFoAUY2++/AMqPqCBUDdyxkAOA/fmjIUwDwYDVR0TAQH/BAUwAwEB
+        /zANBgkqhkiG9w0BAQsFAAOCAQEAiRLiWbcdTVS9QKRaiCmo1dWrWOseghjthe7h
+        bibllikx1pYJJBBPi4NfkKh51Dr44NWXIFsEW3GrsoNWw62ksiJMPMcRaeMROY2z
+        Ud+0uz/6key6wuIaGkow7Jg0XyQJgVkfO+b/5o9Fi5vPRbPY8FCnxOUC0UbGP4uv
+        0v2KMnStG78vqxO/tad2dquBmvZldKN6R/PP9y4yqxR5KmZlFjYNrWmOEnfeJeTB
+        /O/w+rsPpIH0iHhBjmulVM+wtQFM2FxzyRLfmb4+pvvRTQzgs0HGcgQ8m/NnVOQW
+        txWFoMOuX+nWVPcZkZpGe7cJwAFzin6HZj03jtU6y8JZDk3zuQ==
+        -----END CERTIFICATE-----
+    createNamespace: false
+    deployment:
+      apiPort: 10100
+      concurrency: 4
+      hostNetwork: true
+      metricsBindAddress: "0"
+      priorityClassName: system-cluster-critical
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+      - effect: NoSchedule
+        key: node.kubernetes.io/not-ready
+      - effect: NoSchedule
+        key: node.cloudprovider.kubernetes.io/uninitialized
+        value: "true"
+    globalNamespace: tkg-system
+  namespace: tkg-system

@@ -1,0 +1,50 @@
+harborProject: "harbor.example.com/tmc-sm"
+dnsZone: "tmc.example.com"
+supportFlags:
+  - tmc-integration-environment
+clusterIssuer: "local-issuer"
+oidc:
+  issuerType: "pinniped"
+  issuerURL: "https://keycloak.example.com:8443/realms/tmcsm"
+  clientID: "tmcsm"
+  clientSecret: "axJofrT........."
+trustedCAs:
+  # local-ca certifcate needed if cluster issuer is signed by private ca 
+  local-ca.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIIF1zCCA7+gAwIBAgIUAYLpwsMeE1+EWzu9l0y2p3htcmEwDQYJKoZIhvcNAQEN
+    BQAwezELMAkGA1UEBhMCVVMxEjAQBgNVBAgMCU1pbm5lc290YTEUMBIGA1UEBwwL
+    ......
+    -----END CERTIFICATE-----
+  # idp-ca certifcate needed if idp signed by private ca  
+  idp-ca.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIID6zCCAtOgAwIBAgIUO/AHkPOAB1rrov5kKHPdEuxtYccwDQYJKoZIhvcNAQEL
+    ......
+    -----END CERTIFICATE-----
+  # harbor-ca certifcate needed if harbor signed by private ca  
+  harbor-ca.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIIFqDCCA5CgAwIBAgIBADANBgkqhkiG9w0BAQ0FADBlMQswCQYDVQQGEwJVUzES
+    MBAGA1UECAwJTWlubmVzb3RhMRQwEgYDVQQHDAtNaW5uZWFwb2xpczEVMBMGA1UE
+    ......
+    -----END CERTIFICATE-----
+#alertmanager: # needed only if you want to turn on alerting
+#  criticalAlertReceiver:
+#    slack_configs:
+#    - send_resolved: false
+#      api_url: https://hooks.slack.com/services/...
+#      channel: '#<slack-channel-name>'
+contourEnvoy:
+  serviceType: LoadBalancer
+pinnipedExtraEnvVars: []
+minio:
+  username: root
+  password: "VMware1!"
+postgres:
+  userPassword: "VMware1!"
+  maxConnections: 300
+telemetry:
+  ceipOptIn: false
+  eanNumber: ean-not-specified
+  ceipAgreement: false
