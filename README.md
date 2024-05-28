@@ -27,7 +27,7 @@ tmc-local.s3.<my-tmc-dns-zone>
 ## Install Tanzu CLI
 
 Follow instructions on the tanzu cli documentation or tanzu cli github to install the CLI and plugins.  You will need the tanzu package plugings
-```
+
 ## Create Registry Project and Validate
 
 1. Create a project in your registry (ex. tmcsm).  Project needs to be public as for version 1.0.1
